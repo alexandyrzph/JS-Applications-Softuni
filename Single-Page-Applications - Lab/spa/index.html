@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SPA Demo</title>
+    <script src="./src/app.js" type="module"></script>
+    <style>
+        #sections {
+            display: none; 
+        }
+
+        label{
+            display: block;
+        }
+        
+        #guestNav, #userNav {
+            display: none;
+        }
+    </style>
+</head>
+
+<body>
+    <nav>
+        <a href="index.html" id="homeBtn">Home</a>
+        <a href="catalog.html" id="catalogBtn">Catalog</a>
+        <a href="about.html" id="aboutUsBtn">About us</a>
+
+        <div id="guestNav">
+            <a href="login.html" id="loginBtn">Login</a>
+            <a href="register.html" id="registerBtn">Register</a>
+        </div>
+
+        <div id="userNav">
+            <a href="javascript:void(0)" id="logoutBtn">Logout</a>
+        </div>
+    </nav>
+
+    <main>
+
+
+
+    </main>
+
+    <div id="sections">
+        <section id="homeSection">
+            <h1>Home page</h1>
+            <p>Home page content</p>
+        </section>
+
+        <section id="catalogSection">
+            <h1>Catalog</h1>
+            <ul>
+            </ul>
+        </section>
+
+        <section id="loginSection">
+            <h1>Login</h1>
+            <form id="loginForm">
+                <label>Email: <input name="email" type="text" placeholder="Enter your email address"></label>
+                <label>Password: <input name="password" type="password" placeholder="Enter your password"></label>
+                <input type="submit" value="LOGIN">    
+            </form>
+        </section>
+
+        <section id="registerSection">
+            <h1>Register</h1>
+
+            <form id="registerForm">
+                <label>Email: <input name="email" type="text" placeholder="Enter your email address"></label>
+                <label>Password: <input name="password" type="password" placeholder="Enter your password"></label>
+                <label>Repeat Password: <input name="repass" type="password" placeholder="Repeat your password"></label>
+                <input type="submit" value="REGISTER">    
+            </form>
+        </section>
+
+        <section id="aboutSection">
+            <h1>About Us</h1>
+            <p>Contact info</p>
+            <p>Phone number: 079846854</p>
+        </section>
+    </div>
+</body>
+
+</html>

@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>PagesJS</title>
+</head>
+
+<body>
+	<h1>PageJS</h1>
+
+	<nav>
+		<a href="/home">Home</a>
+		<a href="/catalog">Catalog</a>
+		<a href="/catalog/kitchens">Kitchens</a>
+		<a href="/about">About</a>
+	</nav>
+
+	<main>
+
+	</main>
+
+	<script type="module">
+		import page from '//unpkg.com/page/page.mjs';
+		const main = document.querySelector('main');
+
+		function homePage(ctx, next) {
+			console.log(ctx);
+			console.log(next);
+			main.innerHTML = '<h1>HOMEPAGE</h1><p>This is home page</p>'
+		}
+
+		function catalogPage(ctx, next) {
+
+			main.innerHTML = '<h1>Catalog Page</h1><p>This is Catalog Page</p>'
+		}
+
+		function detailsPage(ctx, next) {
+			
+			main.innerHTML = '<h1>Details Page</h1><p>This is details page</p>'
+		}
+
+		function aboutPage(ctx, next) {
+			
+			main.innerHTML = '<h1>About Page</h1><p>This is About Page</p>'
+		}
+
+		function checkoutPage(ctx, next) {
+			
+			main.innerHTML = '<h1>Checkout Page</h1><p>This is Checkout Page</p>'
+		}
+
+		page('/home', homePage);
+		page('/catalog', catalogPage);
+		page('/catalog/:productNumber', detailsPage);
+		page('/about', aboutPage);
+		page('/chekout', checkoutPage);
+		
+		page.redirect('/', '/home');
+		page.start(); 
+
+	</script>
+</body>
+
+</html>

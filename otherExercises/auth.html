@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Auth</title>
+    <style>
+        label {
+            display: block;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Register form -->
+    <h2>Register</h2>
+    <form id="register-form">
+        <label>Email: <input type="text" name="email"></label>
+        <label>Password: <input type="password" name="password"></label>
+        <label>Repass: <input type="password" name="repass"></label>
+        <input type="submit" value="Register">
+    </form>
+    <!-- Login form -->
+    <h2>Login</h2>
+    <form id="login-form">
+        <label>Email: <input type="text" name="email"></label>
+        <label>Password: <input type="password" name="password"></label>
+        <input type="submit" value="Login">
+    </form>
+
+
+    <script>
+        // Storing the form in variable and adding eventlistener of type SUBMIT
+        const registerForm = document.getElementById('register-form');
+        registerForm.addEventListener('submit', onRegister);
+
+        // The func onRegister is going to take all info from inputs in the form with the new FormData method
+        // Then we send post request with out email and pass 
+        // And in the end we get the accesstoken from the response and save it to the sessionstorage
+
+        async function onRegister(event) {
+            event.preventDefault();
+            const url = `http://localhost:3030/users/register`;
+            const formData = new FormData(registerForm);
+            const email = formData.get('email').trim();
+            const password = formData.get('password').trim();
+            const repass = formData.get('repass').trim();
+
+            const res = await fetch(url, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ email, password })
+            });
+            const data = await res.json();
+            const token = data.accessToken;
+            sessionStorage.setItem('token', token);
+
+            window.location = '/index.html';
+        }
+
+        // Here the steps are the same 
+
+        const loginForm = document.getElementById('login-form');
+        loginForm.addEventListener('submit', onLogin);
+
+        async function onLogin(event) {
+            event.preventDefault();
+            const url = `http://localhost:3030/users/login`;
+            const formData = new FormData(loginForm);
+            const email = formData.get('email').trim();
+            const password = formData.get('password').trim();
+
+            try {
+
+                const res = await fetch(url, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ email, password })
+                });
+                if (res.status != 200) {
+                    const error = await res.json();
+                    throw new Error(`Error: ${error.message}`);
+                }
+                const data = await res.json();
+                const token = data.accessToken;
+                sessionStorage.setItem('token', token);
+
+                window.location = '/index.html';
+            } catch (err) {
+                alert(err.message);
+            }
+        }
+    </script>
+</body>
+
+</html>

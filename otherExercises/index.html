@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Data demo</title>
+    <style>
+        label {
+            display: block;
+        }
+    </style>
+</head>
+
+<body>
+    <a href="/auth.html">Login / Register</a>
+    <form>
+        <label>Person: <input type="text" name="person" /></label>
+        <label>Phone: <input type="text" name="phone" /></label>
+        <input type="submit" value="Create Article" />
+    </form>
+
+    <script>
+        const form = document.querySelector("form");
+        form.addEventListener("submit", onSubmit);
+
+        async function onSubmit(event) {
+            event.preventDefault();
+            const data = new FormData(form);
+
+            const person = data.get('person').trim();
+            const phone = data.get('phone').trim();
+
+            const record = { person, phone };
+
+            const result = await postData(record);
+
+            form.reset();
+
+            alert('Record Created');
+        }
+
+        async function getData() {
+            const url = `http://localhost:3030/jsonstore/phonebook`;
+
+            const options = { headers: {} };
+
+            const token = sessionStorage.getItem('token');
+
+            if (token !== null) {
+                options.headers['X-Authorization'] = token;
+            }
+
+            const req = await fetch(url, options);
+            const res = await req.json();
+
+            return res;
+        }
+
+        async function getDataById(id) {
+            const url = `http://localhost:3030/jsonstore/phonebook/` + id;
+            const req = await fetch(url);
+            const res = await req.json();
+
+            return res;
+        }
+
+        async function postData(data) {
+            const url = `http://localhost:3030/jsonstore/phonebook`;
+
+            const options = {
+                method: "post",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(data),
+            };
+
+            try {
+                const req = await fetch(url, options);
+                if (req.ok != true) throw new Error(req.statusText);
+                const res = await req.json();
+
+                return res;
+            } catch (err) {
+
+            }
+        }
+
+        async function updateData(id, data) {
+            const url = `http://localhost:3030/jsonstore/phonebook/` + id;
+
+            const option = {
+                method: "put",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(data),
+            };
+
+            const req = await fetch(url, option);
+            const res = await req.json();
+
+            return res;
+        }
+
+        async function deleteData(id) {
+            const url = `http://localhost:3030/jsonstore/phonebook/` + id;
+
+            const options = {
+                method: "delete",
+            };
+            const req = await fetch(url, options);
+            const res = await req.json();
+
+            return res;
+        }
+    </script>
+</body>
+
+</html>
