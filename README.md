@@ -1,5 +1,4 @@
 # JavaScript Applications Course SoftUni
-
 #### Solutions from the SoftUni Course - JS Applications 
 
 ## The Course Covers the topics below
